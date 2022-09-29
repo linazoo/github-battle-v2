@@ -1,6 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { fetchPopularRepos } from "../utils/api";
+import Table from "./Table";
 
 function LanguagesNav({ selected, onUpdateLanguage }) {
   const languages = ["All", "JavaScript", "Ruby", "Java", "CSS", "Python"];
@@ -36,11 +37,9 @@ export default class Popular extends React.Component {
 
     this.updateLanguage = this.updateLanguage.bind(this);
   }
-
   componentDidMount() {
     this.updateLanguage(this.state.selectedLanguage);
   }
-
   updateLanguage(selectedLanguage) {
     this.setState({
       selectedLanguage,
@@ -56,6 +55,7 @@ export default class Popular extends React.Component {
       )
       .catch((error) => {
         console.warn("Error fetching repos: ", error);
+
         this.setState({
           error: `There was an error fetching the repositories`,
         });
@@ -73,8 +73,10 @@ export default class Popular extends React.Component {
             onUpdateLanguage={this.updateLanguage}
           />
         </div>
+
         {error && <p className="text-center error">{error}</p>}
-        {repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
+
+        {repos && <Table repos={repos} />}
       </main>
     );
   }
