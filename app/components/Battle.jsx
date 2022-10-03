@@ -21,24 +21,23 @@ class PlayerInput extends React.Component {
     this.state = {
       username: "",
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleSubmit.bind(this);
-  }
 
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
   handleSubmit(event) {
     event.preventDefault();
+
     this.props.onSubmit(this.state.username);
   }
-
   handleChange(event) {
     this.setState({
       username: event.target.value,
     });
   }
-
   render() {
     return (
-      <form className="card bg-light" onSubmit={this.handleSubmit}>
+      <form className="card" onSubmit={this.handleSubmit}>
         <label htmlFor="username" className="player-label">
           {this.props.label}
         </label>
@@ -46,14 +45,13 @@ class PlayerInput extends React.Component {
           <input
             type="text"
             id="username"
-            className="input-light"
             placeholder="github username"
             autoComplete="off"
             value={this.state.username}
             onChange={this.handleChange}
           />
           <button
-            className="btn link btn-dark"
+            className="btn link"
             type="submit"
             disabled={!this.state.username}
           >
@@ -73,15 +71,14 @@ export default class Battle extends React.Component {
       playerOne: null,
       playerTwo: null,
     };
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
   handleSubmit(id, player) {
     this.setState({
       [id]: player,
     });
   }
-
   render() {
     const { playerOne, playerTwo } = this.state;
     const disabled = !playerOne || !playerTwo;
@@ -104,7 +101,7 @@ export default class Battle extends React.Component {
           ) : null}
           {playerTwo === null ? (
             <PlayerInput
-              label="Player One"
+              label="Player Two"
               onSubmit={(player) => this.handleSubmit("playerTwo", player)}
             />
           ) : null}
